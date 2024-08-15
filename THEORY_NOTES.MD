@@ -34,3 +34,6 @@
    }, [<-- `host` Allows adding any key-value pairs to component -->]
    })
    export class ControlComponent { }
+
+6. `View` is an internally managed data structure that `holds references` to the `DOM elements` rendered by a component.
+7. `Content` is a some `other (partial) View` data structure projected into component's View. (Ex: <ng-content>)
