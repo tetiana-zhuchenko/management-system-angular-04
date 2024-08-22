@@ -2,7 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
+  output,
+  Output,
   viewChild,
   ViewChild,
   ViewChildren,
@@ -19,23 +22,24 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './new-ticket.component.css',
 })
 export class NewTicketComponent implements OnInit, AfterViewInit {
-  // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
+  @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
   // @ViewChildren(ButtonComponent) buttons?: [] //<-- uses for select multiple elements
-  private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+  // private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+  // @Output() add = new EventEmitter<{title: string, text: string}>();
+  add = output<{ title: string; text: string }>();
 
   ngOnInit(): void {
     console.log('ONINIT');
-    console.log(this.form().nativeElement);
+    console.log(this.form?.nativeElement);
   }
 
   ngAfterViewInit(): void {
     console.log('AFTER VIEW INIT');
-    console.log(this.form().nativeElement);
+    console.log(this.form?.nativeElement);
   }
 
-  onSubmit(title: string, text: string) {
-    console.log(title);
-    console.log(text);
-    this.form().nativeElement.reset();
+  onSubmit(title: string, ticketText: string) {
+    this.add.emit({ title: title, text: ticketText });
+    this.form?.nativeElement.reset();
   }
 }
